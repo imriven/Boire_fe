@@ -1,23 +1,25 @@
-import logo from './logo.svg';
+import axios from "axios"
 import './App.css';
+import React, { useEffect, useState } from "react"
+
+const url = "http://localhost:3300/api"
+
 
 function App() {
+  const [wineList, setWineList] = useState();
+  useEffect(() => {
+    axios
+      .get(`${url}/user/following`)
+      .then(res => {
+        setWineList(res.data)
+      })
+      .catch(err => console.log( err.response.statusText ));
+  })
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+{wineList && wineList.map( w => {
+  return <div> {w.vineyard}, {w.year} </div>
+})}
     </div>
   );
 }
