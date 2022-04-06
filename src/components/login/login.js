@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {Navigate} from "react-router-dom"
 import { LoginWrapper } from "./style";
 import PropTypes from "prop-types";
 
@@ -23,12 +24,17 @@ export default function Login({ setToken }) {
       email,
       password,
     });
-    setToken(token, checked);
+      setToken(token, checked);
+      
   };
 
   const handleChange = () => {
     setChecked(!checked);
   };
+    
+    const handleClick = () => {
+        Navigate("/dashboard");
+    }
 
     return (
       
@@ -54,8 +60,9 @@ export default function Login({ setToken }) {
         </label>
         <br />
         <br />
-        <div>
-          <button type="submit">Submit</button>
+                <div>
+                    
+          <button type="submit" onClick={handleClick}>Submit</button>
         </div>
       </form>
     </LoginWrapper>
