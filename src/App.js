@@ -6,37 +6,32 @@ import Dashboard from "./components/dashboard/dashboard";
 import Preferences from "./components/preferences/preferences";
 import Home from "./components/home/home";
 import Login from "./components/login/login";
+import Wine from "./components/wine/wine";
 import useToken from "./components/hooks/useToken";
-
-const url = "http://localhost:3300/api";
 
 function App() {
   const { token, setToken } = useToken();
 
-  // let checkToken = () => {
-  //   if (!token) {
-  //     return <Login setToken={setToken} />;
-  //   }
-  // };
-
-  let ProtectedRoute = () => {
+  let ProtectedRoute = ({ token, children }) => {
     if (!token) {
-      return <Navigate to="/login" />;
+      return <Navigate to="/login" replace />;
     }
+    return children;
   };
 
   return (
     <Wrapper>
       <BrowserRouter forceRefresh={true}>
-        <NavBar />
+        <NavBar token={token} />
         <h1>Application</h1>
         <Routes>
           <Route exact path="/" element={<Home />} />
-          <Route path="login" element={<Login />} setToken={setToken}/>
+          <Route path="/wine" element={<Wine token={token} />} />
+          <Route path="/login" element={<Login setToken={setToken} />} />
           <Route
             path="/dashboard"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute token={token}>
                 <Dashboard />
               </ProtectedRoute>
             }
@@ -44,7 +39,7 @@ function App() {
           <Route
             path="/preferences"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute token={token}>
                 <Preferences />
               </ProtectedRoute>
             }

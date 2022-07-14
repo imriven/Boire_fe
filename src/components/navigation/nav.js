@@ -2,7 +2,7 @@ import React from "react";
 import { Nav } from "grommet";
 import { NavLink, useNavigate, Link } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBar(props) {
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -16,9 +16,9 @@ export default function NavBar() {
       <Link to="/">Home</Link>
       <Link to="/dashboard">Dashboard</Link>
       <Link to="/preferences">Settings</Link>
-      <NavLink to="/" onClick={handleClick}>
+      {props.token && <NavLink to="/" onClick={handleClick}>
         Logout
-      </NavLink>
+      </NavLink>}
     </Nav>
   );
 }
