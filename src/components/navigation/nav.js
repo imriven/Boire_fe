@@ -16,9 +16,13 @@ export default function NavBar(props) {
       <Link to="/">Home</Link>
       <Link to="/dashboard">Dashboard</Link>
       <Link to="/preferences">Settings</Link>
-      {props.token && <NavLink to="/" onClick={handleClick}>
-        Logout
-      </NavLink>}
+      {props.token ? (
+        <NavLink to="/" onClick={handleClick}>
+          Logout
+        </NavLink>
+      ) : (
+        <Link to="/login">Login</Link>
+      )}
     </Nav>
   );
 }
